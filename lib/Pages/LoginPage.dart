@@ -22,27 +22,37 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: CustomAppBar(
-        child: _textWorkers()
-      ),
+      // appBar: CustomAppBar(
+      //   child: _textWorkers()
+      // ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Container(
-          color: Colors.grey[100],
-          width: double.infinity,
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.grey[200],
+            width: double.infinity,
+            height: size.height,
             child: Column(
               children: [
+                CustomAppBar(
+                  child: _textWorkers()
+                ),
                 _botonesLogin(context),
                 _divisor(),
-                _inputField(keybo: TextInputType.emailAddress,label: "Introduzca su correo",icono: Icons.person_outline_outlined,controller: _email),
-                _inputField(keybo: TextInputType.visiblePassword,label: "Introduzca su contraseñas",icono: Icons.security,controller: _pass),
+                Expanded(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _inputField(keybo: TextInputType.emailAddress,label: "Introduzca su correo",icono: Icons.person_outline_outlined,controller: _email),
+                    _inputField(keybo: TextInputType.visiblePassword,label: "Introduzca su contraseñas",icono: Icons.security,controller: _pass),
+                  ],
+                )),
                 _botonesLoginCorreo(context),
 
               ],
-            ),
-          )
+            )
+          ),
         ),
       ),
     );
