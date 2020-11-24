@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:Workers/global.dart';
+
 class CustomAppBar extends PreferredSize {
   final Widget child;
   final double height;
 
-  CustomAppBar({@required this.child, this.height = kToolbarHeight});
+  CustomAppBar({@required this.child, this.height = 150});
 
   @override
   Size get preferredSize => Size.fromHeight(height);
