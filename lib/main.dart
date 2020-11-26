@@ -28,8 +28,13 @@ class MyApp extends StatelessWidget {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            //home: NavigatorBarWorkers(),
-            home: LoginPage(),
+            theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              primarySwatch: Colors.amber,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            home: NavigatorBarWorkers(),
+            //home: LoginPage(),
           );
         }
 
