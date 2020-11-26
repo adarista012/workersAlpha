@@ -1,7 +1,8 @@
+import 'package:Workers/UI/widgets/navigator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'Pages/HomePage.dart';
+import 'Pages/LoginPage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            home: HomePage(),
-            //zhome: LoginPage(),
+            //home: NavigatorBarWorkers(),
+            home: LoginPage(),
           );
         }
 
