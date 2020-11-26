@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,13 +14,27 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+FirebaseAuth auth = FirebaseAuth.instance;
 class _LoginPageState extends State<LoginPage> {
-  FirebaseAuth auth = FirebaseAuth.instance;
 
   TextEditingController _email = new TextEditingController();
 
   TextEditingController _pass = new TextEditingController();
 
+  @override
+  void initState() { 
+    super.initState();
+     auth
+      .authStateChanges()
+      .listen((User user) {
+        if (user == null) {
+          print('User is currently signed out!');
+        } else {
+          print('User is signed in!');
+        }
+      });
+
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -142,11 +157,11 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(100),
                     onPressed: () async {
                       UserCredential userCred = await signInWithGoogle();
-                      User user = userCred.user;
-                      Navigator.pushAndRemoveUntil(
-                        context,MaterialPageRoute(
-                          builder: (BuildContext context) => HomePage()),
-                            ModalRoute.withName('/home'),);
+                      // User user = userCred.user;
+                      // Navigator.pushAndRemoveUntil(
+                      //   context,MaterialPageRoute(
+                      //     builder: (BuildContext context) => HomePage()),
+                      //       ModalRoute.withName('/home'),);
                     },
                     child: Text("INICIAR SESION"),
                   ),
@@ -214,68 +229,103 @@ class _LoginPageState extends State<LoginPage> {
       child: Text("Workers", textAlign: TextAlign.center,style: style,),
     );
   }
-}
 
-
-Future<UserCredential> signInWithFacebook() async {
-  // Trigger the sign-in flow
-  LoginResult result ;
-  try {
-    result = await FacebookAuth.instance.login();
-    print("################### $result");
-  } catch (e) {
-    print("""
-    login
-    $e
-    ${e.toString()}
-    """);
-  }
-  // Create a credential from the access token
-  FacebookAuthCredential facebookAuthCredential ;
-  try {
-    facebookAuthCredential =
-    FacebookAuthProvider.credential(result.accessToken.token);
-    print("################### $facebookAuthCredential");
-
-    } catch (e) {
-      print("""
-      credential
-      $e
-    ${e.toString()}
-      """);
-    }
-
-  // Once signed in, return the UserCredential
-  UserCredential userFinal ;
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    LoginResult result ;
     try {
-      userFinal = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-      print("################### $userFinal");
-
+      result = await FacebookAuth.instance.login();
+      print("################### $result");
     } catch (e) {
       print("""
-      signInWithCredential
+      login
       $e
-    ${e.toString()}
+      ${e.toString()}
       """);
     }
-  return userFinal;
-}
+    // Create a credential from the access token
+    FacebookAuthCredential facebookAuthCredential ;
+    try {
+      facebookAuthCredential =
+      FacebookAuthProvider.credential(result.accessToken.token);
+      print("################### $facebookAuthCredential");
 
-Future<UserCredential> signInWithGoogle() async {
-  // Trigger the authentication flow
-  final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+      } catch (e) {
+        print("""
+        credential
+        $e
+      ${e.toString()}
+        """);
+      }
 
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    // Once signed in, return the UserCredential
+    UserCredential userFinal ;
+      try {
+        userFinal = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+        print("################### $userFinal");
 
-  // Create a new credential
-  final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
-  );
+      } catch (e) {
+        print("""
+        signInWithCredential
+        $e
+      ${e.toString()}
+        """);
+      }
+    return userFinal;
+  }
 
-  // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance.signInWithCredential(credential);
-  
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    GoogleSignInAccount googleUser;
+    try {
+      googleUser = await GoogleSignIn().signIn();
+    } catch (e) {
+      print("""
+
+      error sign in
+      $e
+      
+      """);  
+    }
+
+    // Obtain the auth details from the request
+    GoogleSignInAuthentication googleAuth;
+    try {
+      googleAuth = await googleUser.authentication;
+    } catch (e) {
+      print("""
+
+      error sign in
+      $e
+      
+      """);  
+    }
+
+    // Create a new credential
+    GoogleAuthCredential credential;
+
+    try {
+      credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+    } catch (e) {
+      print("""
+
+      error sign in
+      $e
+      
+      """);  
+    }
+
+    try {
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      return null;
+    }
+    // Once signed in, return the UserCredential
+    
+  }
+
 }
 

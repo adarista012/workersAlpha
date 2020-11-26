@@ -1,4 +1,4 @@
-package com.example.Workers
+package com.example.workers
 
 import io.flutter.embedding.android.FlutterActivity
 
