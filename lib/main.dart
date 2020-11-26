@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.amber,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: NavigatorBarWorkers(),
-            //home: LoginPage(),
+            //home: NavigatorBarWorkers(),
+            home: LoginPage(),
           );
         }
 
