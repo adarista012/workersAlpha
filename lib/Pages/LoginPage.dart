@@ -1,10 +1,10 @@
 import 'package:Workers/Pages/HomePage.dart';
 import 'package:Workers/UI/widgets/custom_app_bar.dart';
-import 'package:Workers/UI/widgets/navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../global.dart';
@@ -15,12 +15,24 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseAuth auth = FirebaseAuth.instance;
 
+class _LoginPageState extends State<LoginPage> {
   TextEditingController _email = new TextEditingController();
 
   TextEditingController _pass = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    auth.authStateChanges().listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
