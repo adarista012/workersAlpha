@@ -1,6 +1,8 @@
-import 'package:Workers/Pages/LoginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'Pages/LoginPage.dart';
+import 'UI/widgets/navigator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,7 +10,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
@@ -27,13 +28,18 @@ class MyApp extends StatelessWidget {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            home:  LoginPage(),
+            theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              primarySwatch: Colors.amber,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            // home: NavigatorBarWorkers(),
+            home: LoginPage(),
           );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
         return CircularProgressIndicator();
-      
       },
     );
     // MaterialApp(
