@@ -1,8 +1,8 @@
-import 'package:Workers/UI/widgets/navigator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'Pages/LoginPage.dart';
+import 'UI/widgets/navigator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.amber,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            //home: NavigatorBarWorkers(),
-            home: LoginPage(),
+            home: NavigatorBarWorkers(),
+            //home: LoginPage(),
           );
         }
 
