@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../global.dart';
+
 class LoginPage extends StatefulWidget {
   //variables de registro
   @override
@@ -31,14 +33,70 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
           child: Container(
-              color: Colors.grey[200],
+              //color: Colors.red,
+              //color: Colors.grey[200],
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [
+                      workersSecondary,
+                      workersPrimary,
+                    ],
+                    begin: const FractionalOffset(1, -1),
+                    end: const FractionalOffset(0.0, 1),
+                    stops: [0, 1],
+                    tileMode: TileMode.clamp),
+              ),
               width: double.infinity,
               height: size.height,
               child: Column(
                 children: [
-                  CustomAppBar(child: _textWorkers()),
-                  _botonesLogin(context),
-                  _divisor(),
+                  //CustomAppBar(child: _textWorkers()),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 400,
+                          )
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Workers',
+                          style: titleStyleWhite.copyWith(
+                            fontSize: 50,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.red,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  /*
                   Expanded(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +113,10 @@ class _LoginPageState extends State<LoginPage> {
                           controller: _pass),
                     ],
                   )),
+                  _divisor(),
+                  _botonesLogin(context),
                   _botonesLoginCorreo(context),
+                  */
                 ],
               )),
         ),
@@ -75,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.grey.withOpacity(0.5),
           )),
           Text(
-            "   OR   ",
+            "   o   ",
             style: TextStyle(
                 color: Colors.grey.withOpacity(0.6),
                 fontWeight: FontWeight.bold),
@@ -93,6 +154,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _botonesLogin(BuildContext context) {
     return Container(
+      color: Colors.black,
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: EdgeInsets.only(top: 15),
       child: Row(
@@ -150,6 +212,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _botonesLoginCorreo(BuildContext context) {
     return Container(
+      color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: EdgeInsets.only(top: 15),
       child: Row(
@@ -194,7 +257,8 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Theme(
         data: new ThemeData(
-          primaryColor: Colors.orangeAccent,
+          primaryColor: Colors.lightBlue,
+          //primaryColor: Colors.orangeAccent,
           primaryColorDark: Colors.orangeAccent,
         ),
         child: TextFormField(

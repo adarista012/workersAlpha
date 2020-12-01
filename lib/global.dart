@@ -15,7 +15,7 @@ TextStyle textBrownMidle = new TextStyle(
 );
 
 TextStyle titleStyleWhite = new TextStyle(
-    fontFamily: 'Helvetica',
+    fontFamily: 'Avenir',
     color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 25);
