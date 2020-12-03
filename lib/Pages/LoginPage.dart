@@ -1,10 +1,11 @@
 import 'package:Workers/Pages/HomePage.dart';
 import 'package:Workers/UI/widgets/custom_app_bar.dart';
+import 'package:Workers/UI/widgets/navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';bhhhß
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../global.dart';
@@ -28,7 +29,14 @@ class _LoginPageState extends State<LoginPage> {
     auth.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
+        //Navigator.pushReplacement(context,
+        //    MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
       } else {
+        //NavigatorBarWorkers
+        //Navigator.pushReplacement(
+        //    context,
+        //    MaterialPageRoute(
+        //        builder: (BuildContext context) => NavigatorBarWorkers()));
         print('User is signed in!');
       }
     });
@@ -47,65 +55,86 @@ class _LoginPageState extends State<LoginPage> {
           child: Container(
               //color: Colors.red,
               //color: Colors.grey[200],
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                    colors: [
-                      workersSecondary,
-                      workersPrimary,
-                    ],
-                    begin: const FractionalOffset(1, -1),
-                    end: const FractionalOffset(0.0, 1),
-                    stops: [0, 1],
-                    tileMode: TileMode.clamp),
-              ),
+
               width: double.infinity,
               height: size.height,
               child: Column(
                 children: [
                   //CustomAppBar(child: _textWorkers()),
                   Expanded(
-                    flex: 1,
+                    flex: 3,
                     child: Container(
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 400,
-                          )
-                        ],
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment
+                              .topCenter, // 10% of the width, so there are ten blinds.
+                          colors: [
+                            workersPrimary,
+                            workersColorButton,
+                            workersSecondary,
+                          ], // red to yellow
+                          tileMode: TileMode
+                              .clamp, // repeats the gradient over the canvas
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(100),
+                        ),
+                        //bottomRight: Radius.circular(70)),
                       ),
                       child: Center(
                         child: Text(
                           'Workers',
-                          style: titleStyleWhite.copyWith(
+                          style: TextStyle(
+                            fontFamily: 'Avenir',
                             fontSize: 50,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              BoxShadow(
+                                color: Colors.black,
+                                //spreadRadius: -60,
+                                blurRadius: 10,
+                                offset: Offset(2, 4),
+                              )
+                            ],
                           ),
                         ),
                       ),
                     ),
                   ),
                   Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _inputField(
+                              keybo: TextInputType.emailAddress,
+                              label: "Introduzca su correo",
+                              icono: Icons.person_outline_outlined,
+                              controller: _email),
+                          _inputField(
+                              keybo: TextInputType.visiblePassword,
+                              label: "Introduzca su contraseñas",
+                              icono: Icons.security,
+                              controller: _pass),
+                        ],
+                      )),
+                  Expanded(
                     flex: 1,
-                    child: Container(
-                      color: Colors.blue,
-                    ),
+                    child: _botonesLoginCorreo(context),
                   ),
                   Expanded(
                     flex: 1,
                     child: Container(
-                      color: Colors.red,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.white,
-                    ),
+                        //color: Colors.white,
+                        ),
                   ),
                   Expanded(
                     flex: 1,
                     child: Container(
                       color: Colors.transparent,
+                      child: _botonesLogin(context),
                     ),
                   ),
                   /*
@@ -166,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _botonesLogin(BuildContext context) {
     return Container(
-      color: Colors.black,
+      //color: Colors.black,
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: EdgeInsets.only(top: 15),
       child: Row(
@@ -179,7 +208,8 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(8.0),
               child: CupertinoButton(
                 padding: EdgeInsets.all(0),
-                color: Color.fromRGBO(201, 65, 48, 1.0),
+                //color: Color.fromRGBO(201, 65, 48, 1.0),
+                color: Colors.red,
                 borderRadius: BorderRadius.circular(100),
                 onPressed: () async {
                   UserCredential userCred = await signInWithGoogle();
@@ -191,7 +221,11 @@ class _LoginPageState extends State<LoginPage> {
                     ModalRoute.withName('/home'),
                   );
                 },
-                child: Text("Google"),
+                child: Text(
+                  "Google",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
@@ -200,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CupertinoButton(
-                color: Colors.indigo,
+                color: Colors.blue,
                 borderRadius: BorderRadius.circular(100),
                 padding: EdgeInsets.all(0),
                 onPressed: () async {
@@ -213,7 +247,11 @@ class _LoginPageState extends State<LoginPage> {
                     ModalRoute.withName('/home'),
                   );
                 },
-                child: Text("Facebook"),
+                child: Text(
+                  "Facebook",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
@@ -224,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _botonesLoginCorreo(BuildContext context) {
     return Container(
-      color: Colors.white,
+      //color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: EdgeInsets.only(top: 15),
       child: Row(
@@ -237,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(8.0),
               child: CupertinoButton(
                 padding: EdgeInsets.all(20),
-                color: Colors.blue,
+                color: workersColorButton,
                 borderRadius: BorderRadius.circular(100),
                 onPressed: () async {
                   UserCredential userCred = await signInWithGoogle();
@@ -251,7 +289,11 @@ class _LoginPageState extends State<LoginPage> {
                     ModalRoute.withName('/home'),
                   );
                 },
-                child: Text("INICIAR SESION"),
+                child: Text(
+                  "INICIAR SESION",
+                  style: TextStyle(
+                      color: Colors.brown, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
@@ -269,23 +311,24 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Theme(
         data: new ThemeData(
-          primaryColor: Colors.lightBlue,
-          //primaryColor: Colors.orangeAccent,
-          primaryColorDark: Colors.orangeAccent,
-        ),
+            primaryColor: workersColorButton,
+            //primaryColor: Colors.orangeAccent,
+            primaryColorDark: Colors.brown),
         child: TextFormField(
+          cursorColor: backgroundColor,
           controller: controller,
           obscureText: keybo != TextInputType.visiblePassword ? false : true,
           decoration: new InputDecoration(
             labelText: "$label",
             // focusColor: Colors.green,
 
-            fillColor: Colors.white,
+            fillColor: Colors.brown,
             prefixIcon: Icon(icono),
+            /*
             border: new OutlineInputBorder(
               borderRadius: new BorderRadius.circular(25.0),
-              borderSide: new BorderSide(color: Colors.orange),
-            ),
+              borderSide: new BorderSide(color: Colors.brown),
+            ),*/
             //fillColor: Colors.green
           ),
           validator: (val) {
