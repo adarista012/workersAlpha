@@ -33,6 +33,11 @@ dependencies:
   firebase_auth: "^0.18.1+2"
   flutter_facebook_auth: "^0.3.0"
   curved_navigation_bar: ^0.3.4
+  geocoding: ^1.0.5
+  geolocator: ^6.1.4
+  flushbar: ^1.10.4
+  
+  
 
 dev_dependencies:
   flutter_test:

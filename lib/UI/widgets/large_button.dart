@@ -1,3 +1,5 @@
+import 'package:Workers/Pages/LoginPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../global.dart';
@@ -30,7 +32,11 @@ class LargeButton extends StatelessWidget {
           text,
           style: labelBoxWorkers2.copyWith(fontSize: 20, color: textColor),
         ),
-        onPressed: () {},
+        onPressed: () async{
+          await FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(context,
+           MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
+        },
       ),
     );
   }

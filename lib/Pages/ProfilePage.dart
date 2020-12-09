@@ -275,6 +275,10 @@ class ProfilePage extends StatelessWidget {
                   color: workersColorButton,
                   textColor: Colors.white,
                   text: 'Solicitar Servicio'),
+              LargeButton(
+                  color: workersColorButton,
+                  textColor: Colors.white,
+                  text: 'Cerrar session'),
               Container(
                 margin: EdgeInsets.only(top: 4),
                 decoration: BoxDecoration(
