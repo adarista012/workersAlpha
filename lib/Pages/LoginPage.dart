@@ -193,7 +193,8 @@ class _LoginPageState extends State<LoginPage> {
         RichText(
           text: TextSpan(
             text: '¿No tienes una cuenta? ',
-            style: DefaultTextStyle.of(context).style,
+            // style: DefaultTextStyle.of(context).style,
+            style: TextStyle(fontWeight: FontWeight.normal,color: Colors.black),
             children: <TextSpan>[
               TextSpan(text: 'Registrate.', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blueAccent),
               recognizer: TapGestureRecognizer()
@@ -277,7 +278,7 @@ class _LoginPageState extends State<LoginPage> {
         RichText(
           text: TextSpan(
             text: '¿Ya tienes una cuenta? ',
-            style: DefaultTextStyle.of(context).style,
+            style: TextStyle(fontWeight: FontWeight.normal,color: Colors.black),
             children: <TextSpan>[
               TextSpan(text: 'Inicia Sesion.', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blueAccent),
               recognizer: TapGestureRecognizer()
